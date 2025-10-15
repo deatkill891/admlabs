@@ -1,0 +1,50 @@
+
+    /* --- Estilos de los iconos (de la respuesta anterior) --- */
+    .acciones-cell {
+      text-align: center;
+      vertical-align: middle;
+      min-width: 80px;
+    }
+
+    .icono-accion {
+      font-size: 1.1em;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .icono-accion:hover {
+      transform: scale(1.5);
+    }
+
+    .icono-borrar {
+      color: red;
+      margin-right: 15px;
+    }
+
+    .icono-reactivar {
+      color: #19a8e0ff;
+    }
+
+    /* --- INICIO DE NUEVOS ESTILOS PARA EL ESTATUS --- */
+
+    .estatus-completo {
+      color: #28a745;
+      /* Verde */
+      font-weight: bold;
+    }
+
+    .estatus-pendiente {
+      color: #fd7e14;
+      /* Naranja */
+      font-weight: bold;
+    }
+
+
+    .estatus-rechazada {
+      color: #dc3545;
+      /* Rojo */
+      font-weight: bold;
+    }
+
+    /* --- FIN DE NUEVOS ESTILOS PARA EL ESTATUS --- */
