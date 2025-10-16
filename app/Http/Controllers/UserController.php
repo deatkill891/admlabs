@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
+use App\Models\CatTipoUsuario;
+use App\Models\CatUbicacion;
 
 class UserController extends Controller
 {
@@ -17,41 +19,40 @@ class UserController extends Controller
     public function index()
     {
         // Obtiene todos los usuarios de la tabla 'users' usando el modelo
-        $users = User::all();
+    $users = User::all();
+    $tiposUsuario = CatTipoUsuario::all(); // <-- AÑADE ESTA LÍNEA
+    $ubicaciones = CatUbicacion::all();   // <-- AÑADE ESTA LÍNEA
 
-        // Devuelve la vista y le pasa la variable $users
-        return view('admin.users.index', [
-            'users' => $users
-        ]);
+    return view('admin.users.index', [
+        'users' => $users,
+        'tiposUsuario' => $tiposUsuario, // <-- AÑADE ESTA LÍNEA
+        'ubicaciones' => $ubicaciones,   // <-- AÑADE ESTA LÍNEA
+    ]);
     }
 
     /**
      * Guarda un nuevo usuario en la base de datos.
      */
-    public function store(Request $request)
-    {
-        // 1. Validar los datos que vienen del formulario
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'puesto' => ['nullable', 'string', 'max:255'],
-            'ubicacion' => ['nullable', 'string', 'max:255'],
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'idTipoUsuario' => ['required', 'exists:CatTipoUsuario,idTipoUsuario'], // Valida contra la tabla y columna correctas
+        'idUbicacion' => ['required', 'exists:CatUbicaciones,idUbicacion'],   // Valida contra la tabla y columna correctas
+    ]);
 
-        // 2. Crear el nuevo usuario si la validación pasa
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'puesto' => $request->puesto,
-            'ubicacion' => $request->ubicacion,
-        ]);
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'idTipoUsuario' => $request->idTipoUsuario, // Guarda en la columna correcta
+        'idUbicacion' => $request->idUbicacion,     // Guarda en la columna correcta
+    ]);
 
-        // 3. Redirigir de vuelta a la página de usuarios con un mensaje de éxito
-        return redirect()->route('admin.users.index')->with('success', 'Usuario creado exitosamente.');
-    }
-
+    return redirect()->route('admin.users.index')->with('success', 'Usuario creado exitosamente.');
+}
     /**
      * Muestra el formulario para editar un usuario existente.
      */
