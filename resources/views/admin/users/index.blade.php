@@ -113,11 +113,9 @@
           {{-- SELECTOR TIPO DE USUARIO CORREGIDO --}}
           <div class="form-group">
             <label for="IdTipoUsuario">Tipo de Usuario</label>
-            {{-- Cambia el name a 'IdTipoUsuario' --}}
             <select id="IdTipoUsuario" name="IdTipoUsuario" class="form-control" required>
               <option value="">Seleccione un tipo...</option>
               @foreach ($tiposUsuario as $tipo)
-              {{-- Usa las columnas correctas --}}
               <option value="{{ $tipo->idTipoUsuario }}">{{ $tipo->TipoUsuario }}</option>
               @endforeach
             </select>
@@ -126,11 +124,9 @@
           {{-- SELECTOR UBICACIÓN CORREGIDO --}}
           <div class="form-group">
             <label for="IdUbicacion">Ubicación</label>
-            {{-- Cambia el name a 'IdUbicacion' --}}
             <select id="IdUbicacion" name="IdUbicacion" class="form-control" required>
               <option value="">Seleccione una ubicación...</option>
               @foreach ($ubicaciones as $ubicacion)
-              {{-- Usa las columnas correctas --}}
               <option value="{{ $ubicacion->idUbicacion }}">{{ $ubicacion->Ubicacion }}</option>
               @endforeach
             </select>
