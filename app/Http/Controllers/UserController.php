@@ -35,20 +35,21 @@ class UserController extends Controller
      */
 public function store(Request $request)
 {
+    // Cambiamos a 'IdTipoUsuario' y 'IdUbicacion'
     $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'idTipoUsuario' => ['required', 'exists:CatTipoUsuario,idTipoUsuario'], // Valida contra la tabla y columna correctas
-        'idUbicacion' => ['required', 'exists:CatUbicaciones,idUbicacion'],   // Valida contra la tabla y columna correctas
+        'IdTipoUsuario' => ['required', 'exists:CatTipoUsuario,idTipoUsuario'],
+        'IdUbicacion' => ['required', 'exists:CatUbicaciones,idUbicacion'],
     ]);
 
     User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'idTipoUsuario' => $request->idTipoUsuario, // Guarda en la columna correcta
-        'idUbicacion' => $request->idUbicacion,     // Guarda en la columna correcta
+        'IdTipoUsuario' => $request->IdTipoUsuario, // Cambiado aquí
+        'IdUbicacion' => $request->IdUbicacion,     // Cambiado aquí
     ]);
 
     return redirect()->route('admin.users.index')->with('success', 'Usuario creado exitosamente.');
